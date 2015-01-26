@@ -58,7 +58,7 @@ func EnqueueWithOptions(queue, class string, args interface{}, opts EnqueueOptio
 	if err != nil {
 		return "", err
 	}
-	queue = Config.Namespace + "queue:" + queue
+	queue = Config.Namespace + queue
 	_, err = conn.Do("rpush", queue, bytes)
 	if err != nil {
 		return "", err

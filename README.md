@@ -1,11 +1,12 @@
-[![Build Status](https://travis-ci.org/jrallison/go-workers.png)](https://travis-ci.org/jrallison/go-workers)
-[![GoDoc](https://godoc.org/github.com/jrallison/go-workers?status.png)](https://godoc.org/github.com/jrallison/go-workers)
+[![Build Status](https://travis-ci.org/travcunn/go-workers.png)](https://travis-ci.org/travcunn/go-workers)
+[![GoDoc](https://godoc.org/github.com/travcunn/go-workers?status.png)](https://godoc.org/github.com/travcunn/go-workers)
 
-[Sidekiq](http://sidekiq.org/) compatible
-background workers in [golang](http://golang.org/).
+Queue system independent fork of: https://github.com/jrallison/go-workers
+The original fork of this project was tied to Sidekiq (Ruby async tasks). Not everyone uses Ruby.
 
-* reliable queueing for all queues using [brpoplpush](http://redis.io/commands/brpoplpush)
-* handles retries
+Background workers in [golang](http://golang.org/).
+
+* reliable queueing for all queues using [BLPOP](http://redis.io/commands/blpop)
 * support custom middleware
 * customize concurrency per queue
 * responds to Unix signals to safely wait for jobs to finish before exiting.
@@ -18,7 +19,7 @@ Example usage:
 package main
 
 import (
-	"github.com/jrallison/go-workers"
+	"github.com/travcunn/go-workers"
 )
 
 func myJob(message *workers.Msg) {
@@ -66,5 +67,3 @@ func main() {
   workers.Run()
 }
 ```
-
-Initial development sponsored by [Customer.io](http://customer.io)

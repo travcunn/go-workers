@@ -83,7 +83,7 @@ func (m *manager) queueName() string {
 
 func newManager(queue string, job jobFunc, concurrency int) *manager {
 	m := &manager{
-		Config.Namespace + "queue:" + queue,
+		Config.Namespace + queue,
 		nil,
 		job,
 		concurrency,

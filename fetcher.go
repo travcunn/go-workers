@@ -67,7 +67,9 @@ func (f *fetch) Fetch() {
 				conn := Config.Pool.Get()
 				defer conn.Close()
 
-				message, err := redis.String(conn.Do("brpoplpush", f.queue, f.inprogressQueue(), 1))
+				message, err := redis.Strings(conn.Do("BLPOP", f.queue, 0))
+
+				args := message[1]
 
 				if err != nil {
 					// If redis returns null, the queue is empty. Just ignore the error.
@@ -76,7 +78,7 @@ func (f *fetch) Fetch() {
 						time.Sleep(1 * time.Second)
 					}
 				} else {
-					c <- message
+					c <- args
 				}
 			})()
 		}
@@ -84,8 +86,8 @@ func (f *fetch) Fetch() {
 
 	for {
 		select {
-		case message := <-messages:
-			f.sendMessage(message)
+		case args := <-messages:
+			f.sendMessage(args)
 		case <-f.stop:
 			f.closed = true
 			f.exit <- true

@@ -2,7 +2,7 @@
 [![GoDoc](https://godoc.org/github.com/travcunn/go-workers?status.png)](https://godoc.org/github.com/travcunn/go-workers)
 
 Queue system independent fork of [github.com/jrallison/go-workers](https://github.com/jrallison/go-workers).
-The original fork of this project was tied to Sidekiq (Ruby async tasks). This fork allows you to push tasks to Redis from any programming language.
+The original fork of this project was tied to Sidekiq (Ruby async tasks). This fork allows you to push tasks to Redis from any programming language (Python, Ruby, GoLang, etc...).
 
 Background workers in [golang](http://golang.org/).
 

@@ -7,13 +7,14 @@ The original fork of this project was tied to Sidekiq (Ruby async tasks). This f
 Background workers in [golang](http://golang.org/).
 
 * reliable queueing for all queues using [BLPOP](http://redis.io/commands/blpop)
+* jobs parameters enqueued using JSON
 * support custom middleware
 * customize concurrency per queue
 * responds to Unix signals to safely wait for jobs to finish before exiting.
 * provides stats on what jobs are currently running
 * well tested
 
-Example usage:
+##### Example usage:
 
 ```go
 package main
@@ -25,7 +26,7 @@ import (
 func myJob(message *workers.Msg) {
   // do something with your message
   // message.Jid()
-  // message.Args() is a wrapper around go-simplejson (http://godoc.org/github.com/bitly/go-simplejson)
+  // message.OriginalJson() is a wrapper around go-simplejson (http://godoc.org/github.com/bitly/go-simplejson)
 }
 
 type myMiddleware struct{}
@@ -67,3 +68,6 @@ func main() {
   workers.Run()
 }
 ```
+
+##### Handling Retries
+This library does not provide the ability to retry tasks in case of failure. Instead, this responsibility is left up to the programmer. To retry a task, simply push the task onto the appropriate Redis queue. Be careful, since this may cause the task to run forever if the task repeatedly fails.
